@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import requests
 
 def check_weather(api_key, city):
