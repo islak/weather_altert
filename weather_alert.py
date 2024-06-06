@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
+import os
 import requests
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def check_weather(api_key, city):
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
@@ -17,7 +22,11 @@ def celsius_to_fahrenheit(celsius):
     return (celsius * 9/5) + 32
 
 def main():
-    api_key = "369f6448dfc3601def7afa4ac2a8227b"
+    api_key = os.getenv("API_KEY")
+    if not api_key:
+        print("API key not found. Make sure to set the API_KEY environment variable.")
+        return
+
     city = "Houston"
 
     weather, temperature_celsius = check_weather(api_key, city)
@@ -30,7 +39,7 @@ def main():
         elif "rain" in weather.lower():
             print("There's a chance of rain today in Houston.")
         elif "thunderstorm" in weather.lower():
-            print("A thunderstorm is expected today.")
+            print("A thunderstorm is expected today. Stay indoors.")
         else:
             print("No severe weather alerts for Houston today.")
     else:
